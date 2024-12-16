@@ -7,11 +7,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Logo from "@/public/icons/logo";
 
-
 import { usePathname } from "next/navigation";
 
 import Profilebar from "./profilebar";
-
 
 import { Skeleton } from "./ui/skeleton";
 import { useUser } from "@/redux/userContext";
@@ -24,8 +22,8 @@ const Dashboardnavbar = () => {
   const [menu, setmenu] = useState(false);
 
   const params = usePathname();
-const [pageload,setpageload]=useState(true)
-const [isScrolling, setIsScrolling] = useState(false);
+  const [pageload, setpageload] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(false);
 
   const [isactive, setactive] = useState(0);
   useEffect(() => {
@@ -34,7 +32,9 @@ const [isScrolling, setIsScrolling] = useState(false);
     const handleScroll = () => {
       //console.log(isScrolling)
       const currentScrollPos = window.pageYOffset;
-      setIsScrolling(currentScrollPos > prevScrollPos && currentScrollPos >100);
+      setIsScrolling(
+        currentScrollPos > prevScrollPos && currentScrollPos > 100
+      );
       prevScrollPos = currentScrollPos;
     };
 
@@ -49,53 +49,56 @@ const [isScrolling, setIsScrolling] = useState(false);
       setactive(4);
     }
   }, []);
-  useEffect(()=>{
-    const token=getToken()
-    if(user){
-      setpageload(false)
+  useEffect(() => {
+    const token = getToken();
+    if (user) {
+      setpageload(false);
     }
-    if(!user && !token){
-      route.push("/")
+    if (!user && !token) {
+      route.push("/");
     }
-  },[user])
-  if(pageload){
-
+  }, [user]);
+  if (pageload) {
     return (
-      <div className={clsx(" sticky top-0 flex flex-col duration-300  z-[200] pt-2 lg:pt-0 bg-[#FBFBFB]",isScrolling?" translate-y-[-100%]":" translate-y-0")}>
+      <div
+        className={clsx(
+          " sticky top-0 flex flex-col duration-300  z-[100] pt-2 lg:pt-0 bg-[#FBFBFB]",
+          isScrolling ? " translate-y-[-100%]" : " translate-y-0"
+        )}
+      >
         <div className="bg-[#FBFBFB] w-full z-[99]">
           <div className="flex px-[1rem]  md:px-[2rem] lg:px-[3rem] py-2 justify-between border-b-[1px] border-[#D5D9DE]">
             <div className="flex items-center h-[44px] gap-10 font-Circular text-[1.25rem] py-2">
-            <Logo />
-             
+              <Logo />
             </div>
             <div className="lg:flex items-center hidden gap-4">
-               
-  
               <div className="flex items-center gap-2">
-              <Skeleton className="h-[2.5rem] w-[2.5rem] rounded-full   bg-black/10" />
-  
-            
+                <Skeleton className="h-[2.5rem] w-[2.5rem] rounded-full   bg-black/10" />
               </div>
             </div>
           </div>
-         
+
           <div className="px-[1rem] md:px-[2rem]    py-2 items-center  lg:px-[3rem] font-Circular border-b border-b-[#E4EAF0] text-[#62676D] hidden md:flex justify-between">
             <div className="flex gap-10 md:py-3 lg:py-4">
               {[...Array(3)].map((_, index) => (
-                <Skeleton key={index} className="h-[1.5rem] w-[5rem] rounded-xl  bg-black/10" />
+                <Skeleton
+                  key={index}
+                  className="h-[1.5rem] w-[5rem] rounded-xl  bg-black/10"
+                />
               ))}
             </div>
-           
           </div>
         </div>
-        
-       
       </div>
     );
   }
   return (
-    <div className={clsx(" sticky top-0 hidden md:flex flex-col z-[200] duration-300  pt-2 lg:pt-0 bg-[#FBFBFB]",isScrolling?" translate-y-[-100%]":" translate-y-0")}>
-     
+    <div
+      className={clsx(
+        " sticky top-0 hidden md:flex flex-col z-[99] duration-300  pt-2 lg:pt-0 bg-[#FBFBFB]",
+        isScrolling ? " translate-y-[-100%]" : " translate-y-0"
+      )}
+    >
       <div className="  bg-[#FBFBFB] w-full z-[99]">
         <div
           className={`flex  px-[1rem] md:px-[2rem] lg:px-[3rem] py-2 justify-between ${
@@ -104,14 +107,12 @@ const [isScrolling, setIsScrolling] = useState(false);
         >
           <div className=" flex items-center gap-10  font-Circular text-[1.25rem]   ">
             <Logo />
-           
           </div>
           <div className=" flex items-center gap-4 ">
             <Profilebar />
-           
           </div>
         </div>
-        
+
         <div className=" px-[1rem] md:px-[2rem] lg:px-[3rem]    font-Circular border-b border-b-[#E4EAF0] text-[#62676D] hidden md:flex justify-between ">
           <div className=" flex gap-10">
             <Link href={"/dashboard"}>
@@ -148,7 +149,7 @@ const [isScrolling, setIsScrolling] = useState(false);
                 )}
               </div>
             </Link>
-          
+
             <Link href={"/dashboard/manage"}>
               <div
                 onClick={() => setactive(3)}
@@ -166,14 +167,9 @@ const [isScrolling, setIsScrolling] = useState(false);
                 )}
               </div>
             </Link>
-           
           </div>
-         
         </div>
       </div>
-
- 
-      
     </div>
   );
 };
